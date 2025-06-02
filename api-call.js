@@ -1,12 +1,24 @@
-async function getPredictedLabel(processed_t) {
-  // TODO: Call your model's api here
-  // and return the predicted label
-  // Possible labels: "up", "down", "left", "right", null
-  // null means stop & wait for the next gesture
-  // For now, we will return a random label
-  const labels = ["up", "down", "left", "right"];
-  const randomIndex = Math.floor(Math.random() * labels.length);
-  const randomLabel = labels[randomIndex];
-  console.log("Predicted label:", randomLabel);
-  return randomLabel;
+async function getPredictedLabel(landmarks) {
+  // landmarks is already an array of {x, y, z} objects from MediaPipe
+  // No need to flatten - just send as is
+  
+  try {
+    const response = await fetch("http://localhost:8000/predict", {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/json",
+      },
+      body: JSON.stringify({ landmarks: landmarks }), 
+    });
+
+    if (!response.ok) {
+      throw new Error(`Server error: ${response.status}`);
+    }
+
+    const result = await response.json();
+    return result.gesture || null; // 
+  } catch (error) {
+    console.error("Prediction error:", error);
+    return null;
+  }
 }
