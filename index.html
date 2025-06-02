@@ -110,12 +110,12 @@
         scene = new THREE.Scene();
 
         // Add the light.
-        light = new THREE.PointLight(0xfe18, 3);
+        light = new THREE.PointLight(0xffffff, 3);
         light.position.set(1, 1, 1.3);
         scene.add(light);
 
         // Add the ball.
-        g = new THREE.SphereGeometry(ballRadius, 5, 3);
+        g = new THREE.SphereGeometry(ballRadius, 32, 16);
         m = new THREE.MeshPhongMaterial({ map: ironTexture });
         ballMesh = new THREE.Mesh(g, m);
         ballMesh.position.set(1, 1, ballRadius);
@@ -221,7 +221,7 @@
             light.intensity += 0.1 * (1.0 - light.intensity);
             renderer.render(scene, camera);
             if (Math.abs(light.intensity - 1.0) < 0.05) {
-              light.intensity = 5.0;
+              light.intensity = 1.0;
               gameState = "play";
             }
             break;
