@@ -13,26 +13,26 @@ async function onResults(results) {
     canvasElement.width,
     canvasElement.height
   );
-  if (results.multiHandLandmarks) {
-    for (const landmarks of results.multiHandLandmarks) {
-      drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
-        color: "#00FF00",
-        lineWidth: 5,
-      });
-      drawLandmarks(canvasCtx, landmarks, {
-        color: "#FF0000",
-        lineWidth: 2,
-      });
-      
-      const arrow = await getPredictedLabel(landmarks);
-      if (arrow) {
-        triggerArrowKey("keydown", arrow);
-        setTimeout(() => {
-          triggerArrowKey("keyup", arrow);
-        }, 100);
-      }
-    }
+  if (results.multiHandLandmarks && results.multiHandLandmarks.length > 0) {
+  const landmarks = results.multiHandLandmarks[0]; // Only the first hand
+
+  drawConnectors(canvasCtx, landmarks, HAND_CONNECTIONS, {
+    color: "#00FF00",
+    lineWidth: 5,
+  });
+  drawLandmarks(canvasCtx, landmarks, {
+    color: "#FF0000",
+    lineWidth: 2,
+  });
+
+  const arrow = await getPredictedLabel(landmarks);
+  if (arrow) {
+    triggerArrowKey("keydown", arrow);
+    setTimeout(() => {
+      triggerArrowKey("keyup", arrow);
+    }, 100);
   }
+}
   canvasCtx.restore();
 }
 
@@ -42,10 +42,10 @@ const hands = new Hands({
   },
 });
 hands.setOptions({
-  maxNumHands: 2,
+  maxNumHands: 1,
   modelComplexity: 1,
   minDetectionConfidence: 0.5,
-  minTrackingConfidence: 0.5,
+  minTrackingConfidence: 0.3,
 });
 hands.onResults(onResults);
 
