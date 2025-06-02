@@ -1,47 +1,63 @@
-# ML Course Final Project - Gesture Control Game
+# ML Course Final Project - Gesture Control Maze Game
 
-This project implements a gesture-controlled game using machine learning for gesture recognition. Players can control the game using hand gestures captured through their webcam.
+This project is a gesture-controlled maze game that uses machine learning for real-time gesture recognition. Players navigate a maze using hand gestures detected via their webcam, or keyboard controls as a fallback.
+
+---
 
 ## 🚀 Quick Start
 
-1. Install the Live Server extension in VS Code:
+1. **Install Live Server in VS Code:**
    - Open VS Code
-   - Go to Extensions (Ctrl+Shift+X)
-   - Search for "Live Server"
-   - Install the extension by Ritwick Dey
+   - Go to Extensions (`Ctrl+Shift+X`)
+   - Search for "Live Server" by Ritwick Dey and install it
 
-2. Launch the project:
+2. **Launch the Game:**
    - Right-click on `index.html`
-   - Select "Open with Live Server"
-   - The game should open in your default browser at `http://localhost:5500`
+   - Select **"Open with Live Server"**
+   - The game will open in your browser at `http://localhost:5500`
+
+---
 
 ## 📁 Project Structure
 
-- `index.html` - Main game interface
-- `api-call.js` - ML model API integration
-- `cam.js` - Webcam handling and gesture processing
-- `keyboard.js` - Keyboard controls implementation
-- `maze.js` - Maze game logic
-- `mp.js` - Media processing utilities
+- `index.html` — Main game interface
+- `maze.js` — Maze generation and game logic
+- `api-call.js` — ML model API integration for gesture recognition
+- `cam.js` — Webcam handling and gesture preprocessing
+- `keyboard.js` — Keyboard controls (fallback)
+- `mp.js` — Media processing utilities
 
-## 🔧 Important Implementation Note
+---
 
-In `api-call.js`, there is a TODO section that needs to be implemented:
+## 🧩 Maze Rendering
 
-```javascript
-// TODO: Call your model's api here
-// and return the predicted label
-// Possible labels: "up", "down", "left", "right", null
-// null means stop & wait for the next gesture
-```
+- The maze is generated and rendered with improved visual clarity.
+- If you want to adjust the maze's appearance, modify the rendering logic or CSS for better contrast and less "foggy" visuals.
 
-You need to replace the current random label generation with your actual ML model API call. The function should:
-- Take the processed tensor (`processed_t`) as input
+---
+
+## 🔧 ML Model Integration
+
+In `api-call.js`, replace the placeholder code with your actual ML model API call:
+
+
+**Instructions:**
+- Accept the processed tensor (`processed_t`) as input
 - Call your deployed ML model's API
-- Return one of these labels: "up", "down", "left", "right", or null
+- Return one of: `"up"`, `"down"`, `"left"`, `"right"`, or `null`
+
+---
 
 ## 🎮 Controls
 
-The game can be controlled through:
-- Hand gestures (via webcam)
-- Keyboard arrows (as fallback)
+- **Hand Gestures:** Use your webcam to control the player in the maze.
+- **Keyboard:** Use arrow keys as a fallback control method.
+
+---
+
+## 📢 Notes
+
+- For best results, ensure your webcam is enabled and has good lighting.
+- If the maze appears unclear, adjust the CSS or canvas rendering settings for higher contrast.
+
+---
