@@ -65,8 +65,8 @@
         bodyDef.position.Set(1, 1);
         wBall = wWorld.CreateBody(bodyDef);
         var fixDef = new b2FixtureDef();
-        fixDef.density = 1.0;
-        fixDef.friction = 0.0;
+        fixDef.density = .7;
+        fixDef.friction = -1.0;
         fixDef.restitution = 0.25;
         fixDef.shape = new b2CircleShape(ballRadius);
         wBall.CreateFixture(fixDef);
@@ -166,7 +166,7 @@
         keyAxis = [0, 0];
 
         // Take a time step.
-        wWorld.Step(1 / 60, 8, 3);
+        wWorld.Step(5 / 60, 2, 3);
       }
 
       function updateRenderWorld() {
@@ -221,7 +221,7 @@
             light.intensity += 0.1 * (1.0 - light.intensity);
             renderer.render(scene, camera);
             if (Math.abs(light.intensity - 1.0) < 0.05) {
-              light.intensity = 1.0;
+              light.intensity = 5.0;
               gameState = "play";
             }
             break;
@@ -302,9 +302,14 @@
           }
         );
 
-        // Create the renderer.
-        renderer = new THREE.WebGLRenderer();
+        // Create the renderer with alpha and transparency enabled.
+        renderer = new THREE.WebGLRenderer({ alpha: true, antialias: true });
+        renderer.setClearColor(0x000000, 0); // Completely transparent background
         renderer.setSize(window.innerWidth, window.innerHeight);
+        renderer.domElement.style.position = 'absolute';
+        renderer.domElement.style.top = '0';
+        renderer.domElement.style.left = '0';
+        renderer.domElement.style.zIndex = '0';
         document.body.appendChild(renderer.domElement);
 
         // Bind keyboard and resize events.
@@ -322,37 +327,51 @@
 
     <style>
       body {
-        background: black;
+        background: linear-gradient(135deg, #fafbff 0%, #f8faff 25%, #ffffff 50%, #fefeff 75%, #ffffff 100%);
         margin: 0;
         padding: 0;
         font-family: "Helvetica";
+        min-height: 100vh;
       }
 
       #instructions {
-        background-color: rgba(0, 0, 0, 0.75);
-        color: white;
+        background-color: rgba(255, 255, 255, 0.95);
+        color: #666;
         text-align: center;
         padding: 32px;
         margin: 0px;
         display: inline;
-        border: 2px solid white;
+        border: 1px solid #e0e6ed;
+        border-radius: 15px;
+        box-shadow: 0 8px 32px rgba(31, 38, 135, 0.15);
+        backdrop-filter: blur(10px);
       }
 
       #help {
         position: absolute;
         left: 0px;
         bottom: 0px;
-        padding: 4px;
-        color: white;
+        padding: 8px 12px;
+        color: #7c8db0;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        margin: 10px;
+        font-size: 14px;
+        border: 1px solid rgba(124, 141, 176, 0.2);
       }
 
       #level {
         position: absolute;
         left: 0px;
         top: 0px;
-        padding: 4px;
-        color: yellow;
+        padding: 8px 12px;
+        color: #6c7ffc;
         font-weight: bold;
+        background: rgba(255, 255, 255, 0.9);
+        border-radius: 8px;
+        margin: 10px;
+        font-size: 16px;
+        border: 1px solid rgba(108, 127, 252, 0.2);
       }
       .output_canvas {
         position: absolute;

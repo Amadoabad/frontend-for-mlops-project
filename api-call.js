@@ -3,7 +3,7 @@ async function getPredictedLabel(landmarks) {
   // No need to flatten - just send as is
   
   try {
-    const response = await fetch("https://isiaqnwlxksg.eu-central-1.clawcloudrun.com/predict", {
+    const response = await fetch("https://xwamniheqtho.eu-central-1.clawcloudrun.com/predict", {
       method: "POST",
       headers: {
         "Content-Type": "application/json",
